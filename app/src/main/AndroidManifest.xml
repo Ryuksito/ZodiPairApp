@@ -13,11 +13,12 @@
         android:theme="@style/Theme.ZodiPair"
         tools:targetApi="31">
         <activity
-            android:name=".ui.home.Home"
+            android:name=".ui.home.ui.home.HomeActivity"
             android:exported="false"
             android:label="@string/title_activity_home" />
         <activity
             android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
