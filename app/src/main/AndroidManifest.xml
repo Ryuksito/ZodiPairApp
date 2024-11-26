@@ -13,13 +13,17 @@
         android:theme="@style/Theme.ZodiPair"
         tools:targetApi="31">
         <activity
-            android:name=".ui.home.ui.home.HomeActivity"
+            android:name=".ui.chats.ChatsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.HomeActivity"
             android:exported="false"
-            android:label="@string/title_activity_home" />
+            android:label=""
+            android:theme="@style/Theme.ZodiPair" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.ZodiPair">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
