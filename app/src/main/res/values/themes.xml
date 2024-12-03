@@ -14,7 +14,7 @@
         <item name="colorOnBackground">@color/colorOnBackground</item>
         <item name="colorOnSurface">@color/colorOnSurface</item>
 
-        <item name="android:statusBarColor">?android:windowBackground</item>
+        <item name="colorPrimaryDark">?android:windowBackground</item>
     </style>
 
     <style name="Theme.ZodiPair" parent="Base.Theme.ZodiPair" />

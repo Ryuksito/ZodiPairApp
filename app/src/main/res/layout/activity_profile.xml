@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.chats.ChatsActivity">
+    tools:context=".ui.profile.ProfileActivity">
 
     <TextView
         android:id="@+id/text_home"
@@ -20,6 +20,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Chats"/>
+        android:text="Profile"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
