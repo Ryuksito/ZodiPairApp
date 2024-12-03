@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -20,6 +21,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.zodipair.R
 import com.example.zodipair.databinding.ActivityHomeBinding
+import com.example.zodipair.domain.use_cases.ApiManager
 import com.example.zodipair.ui.chats.ChatsActivity
 import com.example.zodipair.ui.profile.ProfileActivity
 import com.example.zodipair.ui.settings.SettingsActivity
@@ -33,6 +35,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private var isDarkMode: Boolean = true
     private lateinit var sharedPreferences: SharedPreferences
+    private val apiManager = ApiManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -118,6 +121,11 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
         // OnClickListeners
+    }
+
+    private suspend fun getUsers(){
+        val users = apiManager.getRandomUsers(2)
+        Log.d("Users", users[0].name+users[])
     }
 
     private fun initializeTheme(): Boolean {
