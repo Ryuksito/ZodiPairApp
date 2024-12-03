@@ -125,7 +125,7 @@ class HomeActivity : AppCompatActivity() {
 
     private suspend fun getUsers(){
         val users = apiManager.getRandomUsers(2)
-        Log.d("Users", users[0].name+users[])
+        Log.d("Users", users[0].name+users[1].name)
     }
 
     private fun initializeTheme(): Boolean {
