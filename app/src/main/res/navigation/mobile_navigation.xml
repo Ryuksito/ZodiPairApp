@@ -17,9 +17,4 @@
         android:label=""
         tools:layout="@layout/fragment_home" />
 
-    <fragment
-        android:id="@+id/navigation_chat"
-        android:name="com.example.zodipair.ui.home.ChatFragment"
-        android:label=""
-        tools:layout="@layout/fragment_chat" />
 </navigation>

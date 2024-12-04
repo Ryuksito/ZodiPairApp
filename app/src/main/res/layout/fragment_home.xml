@@ -1,23 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/text_home"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Home"/>
+        android:layout_height="match_parent">
+
+        <!-- Imagen principal -->
+        <ImageView
+            android:id="@+id/sliderImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:contentDescription="Slider Image" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="top"
+            android:background="@drawable/gradient_top" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/gradient_bottom" />
+
+        <ImageView
+            android:id="@+id/centerReactionIcon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/icon_heart"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:contentDescription="Heart Icon" />
+
+        <!-- LinearLayout superpuesto -->
+        <LinearLayout
+            android:id="@+id/user_info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            android:padding="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="@android:color/transparent">
+
+            <!-- Fila 1: Nombre de usuario y un icono -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="bottom">
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="User Name"
+                    android:textColor="?attr/colorOnBackground"
+                    android:layout_gravity="bottom"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/icon_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="22"
+                    android:textSize="36sp"
+                    android:textColor="@color/colorPrimaryHighlight"
+                    android:paddingHorizontal="15dp"
+                    android:gravity="bottom" />
+
+                <ImageView
+                    android:id="@+id/user_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/aries"
+                    android:contentDescription="User Icon"
+                    app:tint="@color/colorPrimaryHighlight" />
+            </LinearLayout>
+
+            <!-- Fila 2: Tres iconos con etiquetas -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="left"
+                android:layout_marginTop="8dp">
+
+
+                <!-- Icono 1 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/icon_2_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="I´m"
+                        android:textSize="12sp"
+                        android:textColor="?attr/colorOnBackground"
+                        android:paddingEnd="10dp"
+                        android:gravity="center" />
+
+                    <ImageView
+                        android:id="@+id/icon_2"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/venus_36"
+                        android:contentDescription="Icon 2"
+                        app:tint="@color/colorSecondaryHighlight" />
+                </LinearLayout>
+
+                <!-- Espaciado -->
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="0dp" />
+
+                <!-- Icono 2 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/icon_3_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Interested in"
+                        android:textSize="12sp"
+                        android:textColor="?attr/colorOnBackground"
+                        android:paddingEnd="10dp"
+                        android:gravity="center" />
+
+                    <ImageView
+                        android:id="@+id/icon_3"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/mars_36"
+                        android:contentDescription="Icon 3"
+                        app:tint="@color/colorSecondaryHighlight" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Fila 3: Descripción del usuario -->
+            <TextView
+                android:id="@+id/user_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic"
+                android:textSize="14sp"
+                android:textColor="?attr/colorOnBackground"
+                android:maxLines="4"
+                android:ellipsize="end" />
+        </LinearLayout>
+
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

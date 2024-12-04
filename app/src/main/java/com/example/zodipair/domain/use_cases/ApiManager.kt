@@ -9,8 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiManager {
 
+    public var ip: String = "201.226.182.199"
     private val retrofit: Retrofit
-
     val apiService: ApiService
 
     init {
@@ -34,7 +34,7 @@ class ApiManager {
         return try {
             apiService.getRandomUsers(count)
         } catch (e: Exception) {
-            emptyList()
+            emptyList()  // Devuelve una lista vacía en caso de error
         }
     }
 

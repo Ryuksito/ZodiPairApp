@@ -52,4 +52,15 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    // Coroutine
+    implementation(libs.kotlinx.coroutines.android)
+
+    // OkHttp (opcional, pero útil para ver las peticiones y respuestas)
+    implementation(libs.logging.interceptor)
+
+    implementation(libs.glide)
 }
