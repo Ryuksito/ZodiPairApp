@@ -16,15 +16,27 @@ import com.bumptech.glide.Glide
 import com.example.zodipair.R
 import com.example.zodipair.domain.use_cases.ApiManager
 import android.view.animation.AnimationUtils
+import android.widget.TextView
+import com.example.zodipair.domain.models.RandomUsersResponse
 import kotlinx.coroutines.launch
+import com.example.zodipair.data.UserSessionManager
+import com.example.zodipair.domain.models.Consts
 
 class HomeFragment : Fragment() {
 
     private lateinit var sliderImageView: ImageView
     private lateinit var reactionImageView: ImageView
     private val apiManager = ApiManager()
-    private var imageList: MutableList<String> = mutableListOf()
     private val cantUsers = 5
+    private var randUsers: MutableList<RandomUsersResponse> = mutableListOf()
+
+    private lateinit var userNameTextView: TextView
+    private lateinit var ageTextView: TextView
+    private lateinit var iconImageView: ImageView
+    private lateinit var genderImageView: ImageView
+    private lateinit var targetGenderImageView: ImageView
+    private lateinit var descriptionTextView: TextView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +44,14 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         reactionImageView = view.findViewById(R.id.centerReactionIcon)
+
+        userNameTextView = view.findViewById(R.id.user_name)
+        ageTextView = view.findViewById(R.id.age_text)
+        iconImageView = view.findViewById(R.id.user_icon)
+        genderImageView = view.findViewById(R.id.icon_gender)
+        targetGenderImageView = view.findViewById(R.id.icon_target_gender)
+        descriptionTextView = view.findViewById(R.id.user_description)
+
         sliderImageView = view.findViewById(R.id.sliderImageView)
         setupGestures(sliderImageView)
         fetchImages()
@@ -40,10 +60,11 @@ class HomeFragment : Fragment() {
 
     private fun fetchImages() {
         lifecycleScope.launch {
+            Log.d("GetRandUsers", "Fetch")
             try {
-                val users = apiManager.getRandomUsers(cantUsers) // Pide 5 imágenes
-                imageList.addAll(users.map { it.url_image }) // Añadir imágenes a la lista
-                if (sliderImageView.drawable == null && imageList.isNotEmpty()) {
+                val users = apiManager.getRandomUsers(cantUsers, UserSessionManager.uuid ?: "") // Pide 5 imágenes
+                randUsers.addAll(users)
+                if (sliderImageView.drawable == null && randUsers.isNotEmpty()) {
                     showImage() // Mostrar la primera imagen si ninguna está visible
                 }
             } catch (e: Exception) {
@@ -52,20 +73,66 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun updateUserInfo(){
+        val currenUser = randUsers[0]
+        userNameTextView.text = currenUser.user_name
+        ageTextView.text = currenUser.age.toString()
+        updateZodiacIcon(currenUser)
+
+        val genderIcon = when (currenUser.gender){
+            Consts.MALE.value -> R.drawable.mars_36
+            Consts.FEMALE.value -> R.drawable.venus_36
+            else -> R.drawable.mars_36
+        }
+        genderImageView.setImageResource(genderIcon)
+
+        val targetGenderIcon = when (currenUser.target_gender){
+            Consts.MALE.value -> R.drawable.mars_36
+            Consts.FEMALE.value -> R.drawable.venus_36
+            else -> R.drawable.mars_36
+        }
+        targetGenderImageView.setImageResource(targetGenderIcon)
+
+        descriptionTextView.text = currenUser.description
+
+    }
+
+    private fun updateZodiacIcon(currentUser: RandomUsersResponse) {
+        val zodiacIcon = when (currentUser.zodiac_symbol) {
+            Consts.ARIES.value -> R.drawable.aries
+            Consts.TAURUS.value -> R.drawable.taurus
+            Consts.GEMINI.value -> R.drawable.gemini
+            Consts.CANCER.value -> R.drawable.cancer
+            Consts.LEO.value -> R.drawable.leo
+            Consts.VIRGO.value -> R.drawable.virgo
+            Consts.LIBRA.value -> R.drawable.libra
+            Consts.SCORPIO.value -> R.drawable.scorpion
+            Consts.SAGITTARIUS.value -> R.drawable.sagittarius
+            Consts.CAPRICORN.value -> R.drawable.capricorn
+            Consts.AQUARIUS.value -> R.drawable.aquarius
+            Consts.PISCES.value -> R.drawable.pisces
+            else -> R.drawable.aries
+        }
+        iconImageView.setImageResource(zodiacIcon)
+    }
+
+
     private fun showImage() {
-        if (imageList.size == 4){
+        updateUserInfo()
+        Log.d("IP", apiManager.ip.toString())
+        if (randUsers.size == 4){
             Log.d("Image Slider", "Lista casi vacia, recargando imagenes...")
             fetchImages()
         }
-        if (imageList.isNotEmpty()) {
+        if (randUsers.isNotEmpty()) {
             // Mostrar la imagen actual
-            val currentImage = imageList[0]
+            val currentImage = randUsers[0].profile_img
             Glide.with(this)
                 .load(currentImage)
                 .into(sliderImageView)
 
             // Eliminar la imagen mostrada de la lista
-            imageList.removeAt(0)
+            randUsers.removeAt(0)
             Log.d("Image Slider", "Imagen mostrada y eliminada: $currentImage")
         }
     }
