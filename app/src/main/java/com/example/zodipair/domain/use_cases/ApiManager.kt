@@ -3,21 +3,22 @@ package com.example.zodipair.domain.use_cases
 import com.example.zodipair.data.network.ApiService
 import com.example.zodipair.domain.models.GetProfileModel
 import com.example.zodipair.domain.models.GetRandomUsersRequest
+import com.example.zodipair.domain.models.GetRequestModel
 import com.example.zodipair.domain.models.GetUserModel
 import com.example.zodipair.domain.models.RandomUsersResponse
-import com.example.zodipair.domain.models.UserModel
+import com.example.zodipair.domain.models.UpdateRequestModel
+import com.example.zodipair.domain.models.UpdateRequestResponseModel
 import com.example.zodipair.domain.models.UserValidationModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
 
 class ApiManager {
 
-    public var ip: String = "201.226.182.199"
     private val retrofit: Retrofit
     val apiService: ApiService
+    val baseUrl = "http://201.226.40.22/"
 
     init {
         val logging = HttpLoggingInterceptor().apply {
@@ -28,7 +29,7 @@ class ApiManager {
             .build()
 
         retrofit = Retrofit.Builder()
-            .baseUrl("http://$ip/")
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -66,10 +67,47 @@ class ApiManager {
                 gender = "",
                 target_gender = "",
                 zodiac_symbol = "",
-                imgs = emptyList()
+                imgs = null
             )
         }
     }
 
+    suspend fun putAddRequest(userId:String, senderId:String, isHotLove:Boolean): UpdateRequestResponseModel{
+        return try {
+            val request = UpdateRequestModel(
+                user_id = userId,
+                sender_id = senderId,
+                is_hot_love = isHotLove,
+            )
+            apiService.putAddRequest(request)
+        }catch (e: Exception){
+            UpdateRequestResponseModel(status = false)
+        }
+    }
+
+    suspend fun getUserRequest(userId: String): GetRequestModel{
+        return try {
+            apiService.getUserRequest(userId)
+        }catch (e: Exception){
+            GetRequestModel(
+                id = -1,
+                hearts = emptyList(),
+                hot_hearts = emptyList()
+            )
+        }
+    }
+
+    suspend fun getUser(userId: String): GetUserModel{
+        return try {
+            apiService.getUser(userId)
+        }catch (e: Exception){
+            GetUserModel(
+                id = "",
+                user_name = "",
+                profile_id = -1,
+                requests_id = -1
+            )
+        }
+    }
 
 }

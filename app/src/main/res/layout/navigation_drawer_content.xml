@@ -7,149 +7,183 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:fitsSystemWindows="true"
-    android:background="?android:attr/windowBackground">
+    android:background="@color/colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
-        <!-- Imagen de perfil -->
-        <ImageView
-            android:id="@+id/drawer_profile_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/circle_user_36"
-            android:scaleType="centerCrop"
-            android:contentDescription="Profile Picture"
-            android:layout_gravity="center_horizontal" />
+        <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
-        <!-- Nombre de usuario -->
-        <TextView
-            android:id="@+id/drawer_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User Name"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="8dp" />
-
-        <!-- Switch para tema -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="30dp"
-            android:paddingHorizontal="12dp"
-            android:paddingBottom="12dp"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center_vertical">
-
+            <!-- Imagen de fondo -->
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/night_day_18"
-                android:contentDescription="Profile Icon"
-                app:tint="?attr/colorOnBackground"
-                android:layout_gravity="center_vertical" />
-
-            <Space
-                android:layout_width="16dp"
-                android:layout_height="wrap_content" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/drawer_theme_switch"
-                android:layout_width="0dp"
+                android:id="@+id/drawer_profile_background"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Dark Mode"
-                android:layout_gravity="center_vertical" />
-        </LinearLayout>
+                android:src="@drawable/drawer_background"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center" />
 
-        <!-- Divisor -->
-        <include layout="@layout/divider" />
+            <!-- Imagen de perfil -->
+            <ImageView
+                android:id="@+id/drawer_profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/circle_user_36"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"
+                android:contentDescription="Profile Picture" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="top"
+                android:background="@drawable/gradient_top" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/gradient_bottom" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
 
+            <TextView
+                android:id="@+id/drawer_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Name"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="8dp" />
+
+            <!-- Switch para tema -->
             <LinearLayout
-                android:id="@+id/row_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="12dp"
+                android:paddingTop="30dp"
+                android:paddingHorizontal="12dp"
+                android:paddingBottom="12dp"
                 android:background="?attr/selectableItemBackground"
                 android:gravity="center_vertical">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/user_18"
+                    android:src="@drawable/night_day_18"
                     android:contentDescription="Profile Icon"
-                    app:tint="?attr/colorOnBackground"/>
+                    app:tint="@color/colorPrimaryHighlight"
+                    android:layout_gravity="center_vertical" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <Space
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/drawer_theme_switch"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Profile"
-                    android:textSize="16sp"
-                    android:layout_marginStart="16dp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/row_settings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/settings_18"
-                    android:contentDescription="Settings Icon"
-                    app:tint="?attr/colorOnBackground"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Settings"
-                    android:textSize="16sp"
-                    android:layout_marginStart="16dp" />
+                    android:layout_weight="1"
+                    android:text="Dark Mode"
+                    app:thumbTint="@color/colorPrimaryHighlight"
+                    android:layout_gravity="center_vertical" />
             </LinearLayout>
 
             <!-- Divisor -->
             <include layout="@layout/divider" />
 
-            <!-- Botón Logout -->
             <LinearLayout
-                android:id="@+id/row_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center_vertical">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/sign_out_18"
-                    android:contentDescription="Logout Icon"
-                    app:tint="?attr/colorOnBackground"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/row_profile"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Logout"
-                    android:textSize="16sp"
-                    android:layout_marginStart="16dp" />
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/user_18"
+                        android:contentDescription="Profile Icon"
+                        app:tint="@color/colorPrimaryHighlight"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Profile"
+                        android:textSize="16sp"
+                        android:layout_marginStart="16dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/row_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/settings_18"
+                        android:contentDescription="Settings Icon"
+                        app:tint="@color/colorPrimaryHighlight"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Settings"
+                        android:textSize="16sp"
+                        android:layout_marginStart="16dp" />
+                </LinearLayout>
+
+                <!-- Divisor -->
+                <include layout="@layout/divider" />
+
+                <!-- Botón Logout -->
+                <LinearLayout
+                    android:id="@+id/row_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/sign_out_18"
+                        android:contentDescription="Logout Icon"
+                        app:tint="@color/colorPrimaryHighlight"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Logout"
+                        android:textSize="16sp"
+                        android:layout_marginStart="16dp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

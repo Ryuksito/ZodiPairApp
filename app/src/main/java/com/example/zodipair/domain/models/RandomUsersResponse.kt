@@ -1,6 +1,7 @@
 package com.example.zodipair.domain.models
 
 data class RandomUsersResponse(
+    val user_id: String,
     val user_name: String,
     val profile_img: String,
     val age: Int,

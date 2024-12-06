@@ -12,7 +12,6 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <!-- Toolbar -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="0dp"
@@ -30,8 +29,7 @@
                 android:layout_marginStart="16dp"
                 android:src="@drawable/circle_user_36"
                 android:contentDescription="Profile Picture"
-                android:scaleType="fitCenter"
-                app:tint="?attr/colorOnBackground" />
+                android:scaleType="fitCenter"   />
 
             <ImageView
                 android:id="@+id/ivLogo"

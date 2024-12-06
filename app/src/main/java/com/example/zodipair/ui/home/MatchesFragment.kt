@@ -1,60 +1,87 @@
 package com.example.zodipair.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.example.zodipair.R
+import com.example.zodipair.data.UserSessionManager
+import com.example.zodipair.domain.models.GetProfileModel
+import com.example.zodipair.domain.models.GetRequestModel
+import com.example.zodipair.domain.use_cases.ApiManager
+import com.example.zodipair.utils.RequestsAdapter
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MatchesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MatchesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var currentRequests: GetRequestModel
+    private val apiManager = ApiManager()
+    private lateinit var dontHaveRequestsLayout: LinearLayout
+    private var profilesList: MutableList<GetProfileModel> = mutableListOf()
+    private var userNames: MutableList<String> = mutableListOf()
+    private var requestsTypes: MutableList<Boolean> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_matches, container, false)
+        val view = inflater.inflate(R.layout.fragment_matches, container, false)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+        dontHaveRequestsLayout = view.findViewById(R.id.donHaveRequests)
+
+        fetchRequests { requests ->
+            val allRequests = requests.hot_hearts + requests.hearts // Combina ambas listas
+            if (allRequests.isNotEmpty()){
+                lifecycleScope.launch {
+                    for(r:String in requests.hot_hearts){
+                        profilesList.add(apiManager.postGetProfile(r))
+                        userNames.add(apiManager.getUser(r).user_name)
+                        requestsTypes.add(true)
+                    }
+                    for(r:String in requests.hearts){
+                        profilesList.add(apiManager.postGetProfile(r))
+                        userNames.add(apiManager.getUser(r).user_name)
+                        requestsTypes.add(false)
+                    }
+                    val adapter = RequestsAdapter(profilesList, userNames, requestsTypes)
+                    recyclerView.adapter = adapter
+                    profilesList = mutableListOf()
+                }
+
+
+            }else{
+                dontHaveRequestsLayout.visibility = View.VISIBLE
+            }
+
+        }
+
+        return view
     }
 
+    private fun fetchRequests(onComplete: (GetRequestModel) -> Unit) {
+        lifecycleScope.launch {
+            UserSessionManager.uuid?.let {
+                val requests = apiManager.getUserRequest(it)
+                Log.d("Requests", requests.toString())
+                onComplete(requests)
+            }
+        }
+    }
+
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MatchesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             MatchesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
             }
     }
 }

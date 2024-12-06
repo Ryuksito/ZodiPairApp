@@ -5,32 +5,28 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.zodipair.R
 import com.example.zodipair.databinding.ActivityHomeBinding
 import com.example.zodipair.domain.use_cases.ApiManager
 import com.example.zodipair.ui.chats.ChatsActivity
-import com.example.zodipair.ui.profile.ProfileActivity
+import com.example.zodipair.ui.profile.UsersProfileActivity
 import com.example.zodipair.ui.settings.SettingsActivity
-import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.switchmaterial.SwitchMaterial
-import kotlinx.coroutines.launch
+import com.example.zodipair.GlideApp
+import com.example.zodipair.data.UserSessionManager
+import com.example.zodipair.domain.models.GetProfileModel
+import com.example.zodipair.ui.user_validation.LoginActivity
 
 class HomeActivity : AppCompatActivity() {
 
@@ -98,7 +94,21 @@ class HomeActivity : AppCompatActivity() {
         val statusBarHeight = getStatusBarHeight()
         navigationView.setPadding(0, statusBarHeight, 0, 0)
 
+        navigationView.findViewById<TextView>(R.id.drawer_username).text = UserSessionManager.user_name ?: "Username"
         val profileButton = findViewById<android.widget.ImageView>(R.id.ivProfile)
+
+        Log.d("User Img Profile", UserSessionManager.profile_img.toString())
+
+        GlideApp.with(this)
+            .load(UserSessionManager.profile_img)
+            .circleCrop()
+            .into(profileButton)
+
+
+        GlideApp.with(this)
+            .load(UserSessionManager.profile_img)
+            .circleCrop()
+            .into(findViewById(R.id.drawer_profile_image))
         profileButton.setOnClickListener {
             if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.openDrawer(GravityCompat.START)
@@ -106,6 +116,10 @@ class HomeActivity : AppCompatActivity() {
                 drawerLayout.closeDrawer(GravityCompat.START)
             }
         }
+
+        Log.d("ProfileButton", "Visibility: ${profileButton.visibility}")
+        Log.d("ProfileButton", "Width: ${profileButton.width}, Height: ${profileButton.height}")
+        Log.d("ProfileButton", "URL: ${UserSessionManager.profile_img}")
 
         // Button ThemeSwitch
         val themeSwitch = navigationView.findViewById<SwitchMaterial>(R.id.drawer_theme_switch)
@@ -118,10 +132,35 @@ class HomeActivity : AppCompatActivity() {
             toggleTheme()
         }
         navigationView.findViewById<LinearLayout>(R.id.row_profile).setOnClickListener {
-            startActivity(Intent(this, ProfileActivity::class.java))
+            val userName = UserSessionManager.user_name
+            val profile = UserSessionManager.profile_id?.let { it1 ->
+                UserSessionManager.age?.let { it2 ->
+                    GetProfileModel(
+                        it1,
+                        UserSessionManager.profile_img.toString(),
+                        UserSessionManager.description.toString(),
+                        it2,
+                        UserSessionManager.gender.toString(),
+                        UserSessionManager.target_gender.toString(),
+                        UserSessionManager.zodiac_symbol.toString(),
+                        UserSessionManager.imgs,
+                    )
+                }
+            }
+
+            val intent = Intent(this, UsersProfileActivity::class.java).apply {
+                putExtra("PROFILE_DATA", profile)
+                putExtra("USER_NAME", userName)
+            }
+            startActivity(intent)
         }
         navigationView.findViewById<LinearLayout>(R.id.row_settings).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
+        }
+        navigationView.findViewById<LinearLayout>(R.id.row_logout).setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
         }
         // OnClickListeners
     }
@@ -138,15 +177,19 @@ class HomeActivity : AppCompatActivity() {
     private fun toggleTheme() {
         val isDarkMode = sharedPreferences.getBoolean("dark_mode", false)
         val newMode = if (isDarkMode) {
-            AppCompatDelegate.MODE_NIGHT_NO // Cambiar a tema claro
+            AppCompatDelegate.MODE_NIGHT_NO
         } else {
-            AppCompatDelegate.MODE_NIGHT_YES // Cambiar a tema oscuro
+            AppCompatDelegate.MODE_NIGHT_YES
         }
 
         sharedPreferences.edit().putBoolean("dark_mode", !isDarkMode).apply()
 
         AppCompatDelegate.setDefaultNightMode(newMode)
+
+        // Mantén el estado de la actividad
+        recreate() // Opcional: sólo si necesitas que los cambios se reflejen inmediatamente.
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_activity_home)

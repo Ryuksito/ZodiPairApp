@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp">
+
+    <!-- Perfil del usuario con foto e información básica -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="start"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/userItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="horizontal">
+            <!-- Foto de perfil -->
+            <ImageView
+                android:id="@+id/iconProfile"
+                android:layout_gravity="center"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/circle_user_36"
+                android:layout_marginEnd="25dp"
+                android:contentDescription="User Profile Picture" />
+
+            <!-- Información del usuario -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginEnd="20dp">
+
+                <!-- Fila 1: Nombre y edad -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="User Name"
+                        android:textSize="16sp"
+                        android:textColor="?attr/colorOnBackground"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+
+                    <TextView
+                        android:id="@+id/user_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="22"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorPrimaryHighlight"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+
+                <!-- Fila 2: Género e intereses -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp">
+
+                    <!-- Género -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/icon_gender_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="I'm"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorOnBackground"
+                            android:paddingEnd="4dp" />
+
+                        <ImageView
+                            android:id="@+id/icon_gender"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/venus_36"
+                            android:contentDescription="User Gender"
+                            app:tint="@color/colorSecondaryHighlight" />
+                    </LinearLayout>
+
+                    <!-- Espaciado -->
+                    <View
+                        android:layout_width="16dp"
+                        android:layout_height="wrap_content" />
+
+                    <!-- Intereses -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/icon_target_gender_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Interested in"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorOnBackground"
+                            android:paddingEnd="4dp" />
+
+                        <ImageView
+                            android:id="@+id/icon_target_gender"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/mars_36"
+                            android:contentDescription="User Interest"
+                            app:tint="@color/colorSecondaryHighlight" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/user_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+
+                android:src="@drawable/aries"
+                android:contentDescription="User Icon"
+                app:tint="@color/colorPrimaryHighlight" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/request_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/icon_hot_heart"
+            android:contentDescription="User Icon" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

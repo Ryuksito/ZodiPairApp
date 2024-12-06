@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
 }
 
 android {
@@ -63,4 +64,5 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     implementation(libs.glide)
+    kapt(libs.compiler.v4160)
 }

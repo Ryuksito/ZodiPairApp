@@ -119,7 +119,6 @@ class HomeFragment : Fragment() {
 
     private fun showImage() {
         updateUserInfo()
-        Log.d("IP", apiManager.ip.toString())
         if (randUsers.size == 4){
             Log.d("Image Slider", "Lista casi vacia, recargando imagenes...")
             fetchImages()
@@ -154,6 +153,7 @@ class HomeFragment : Fragment() {
                 } else if (deltaX < -100) {
                     activateHeartAnimation(R.drawable.icon_heart)
                     animateSlideOut(false) // Deslizar a la izquierda
+                    updateRequests(false)
                     return true
                 }
                 return super.onFling(e1, e2, velocityX, velocityY)
@@ -162,6 +162,7 @@ class HomeFragment : Fragment() {
             override fun onDoubleTap(e: MotionEvent): Boolean {
                 activateHeartAnimation(R.drawable.icon_hot_heart)
                 animateZoomOut()
+                updateRequests(true)
                 return super.onDoubleTap(e)
             }
         })
@@ -169,6 +170,16 @@ class HomeFragment : Fragment() {
         view.setOnTouchListener { _, event ->
             gestureDetector.onTouchEvent(event)
             true
+        }
+    }
+
+    private fun updateRequests(isHotLove: Boolean){
+        lifecycleScope.launch {
+            UserSessionManager.uuid?.let {
+                val r = apiManager.putAddRequest(randUsers[0].user_id,
+                    it, isHotLove)
+                Log.d("Requests", r.toString())
+            }
         }
     }
 
