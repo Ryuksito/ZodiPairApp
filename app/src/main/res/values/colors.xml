@@ -11,4 +11,6 @@
     <color name="colorOnSecondary">#000000</color>
     <color name="colorOnBackground">#000000</color>
     <color name="colorOnSurface">#000000</color>
+    <color name="colorPrimaryHighlight">#b817d1</color>
+    <color name="colorSecondaryHighlight">#9017d1</color>
 </resources>
